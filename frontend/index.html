@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BandTrack</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>BandTrack</h1>
+    <p class="tagline">Track your favorite bands and concerts</p>
+  </header>
 
+  <!-- LOGIN / REGISTER SECTION -->
+  <main>
+    <section id="login-section">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label>
+          Username:
+          <input type="text" id="login-username" required />
+        </label>
+        <label>
+          Password:
+          <input type="password" id="login-password" required />
+        </label>
+        <div class="button-row">
+          <button type="submit">Login</button>
+          <button type="button" id="register-button">Register</button>
+        </div>
+      </form>
+      <p id="login-message" class="message"></p>
+    </section>
+
+    <!-- APP SECTION (VISIBLE AFTER LOGIN) -->
+    <section id="app-section" class="hidden">
+      <div class="top-bar">
+        <span id="user-info"></span>
+        <button id="logout-button" class="secondary">Logout</button>
+      </div>
+
+      <div class="grid">
+        <!-- ARTISTS LIST -->
+        <section class="card">
+          <h2>Artists</h2>
+          <div id="artists-list"></div>
+        </section>
+
+        <!-- CONCERTS LIST -->
+        <section class="card">
+          <h2>Concerts</h2>
+          <p id="concerts-title" class="subtitle">Select an artist to see concerts</p>
+          <div id="concerts-list"></div>
+        </section>
+
+        <!-- REVIEWS -->
+        <section class="card">
+          <h2>Reviews</h2>
+          <p id="reviews-title" class="subtitle">Select an artist to see reviews</p>
+          <div id="reviews-list"></div>
+
+          <form id="review-form" class="hidden">
+            <h3>Add a Review</h3>
+            <label>
+              Rating (1–5):
+              <input type="number" id="review-rating" min="1" max="5" required />
+            </label>
+            <label>
+              Comment:
+              <textarea id="review-comment" rows="3" required></textarea>
+            </label>
+            <button type="submit">Submit Review</button>
+            <p id="review-message" class="message"></p>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>BandTrack Demo Frontend</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
