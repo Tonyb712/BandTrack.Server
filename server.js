@@ -26,6 +26,9 @@ let artists = [
   { id: 1, name: 'The Weekend Vibes' },
   { id: 2, name: 'City Lights Band' },
   { id: 3, name: 'Acoustic Souls' },
+ 
+  // ==== NEW ARTIST AND CONCERT ====
+  { id: 4, name: "Neon Skyline" };
 ];
 
 let concerts = [
@@ -50,6 +53,14 @@ let concerts = [
     artistId: 3,
     ticketUrl: 'https://tickets.example.com/concert/3',
   },
+  // ===== New Concert Push =====
+  {
+   id: 4,
+  title: "Neon Skyline World Tour",
+  date: "2026-01-10",
+  artistId: 4,
+  ticketUrl: "https://tickets.example.com/concert/4"
+}
 ];
 
 let reviews = [
