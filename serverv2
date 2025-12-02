@@ -1,0 +1,168 @@
+// server.js
+// BandTrack backend demo (in-memory data only)
+
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// =====================================================
+// In-Memory "Database"
+// =====================================================
+
+let users = [
+  {
+    id: 1,
+    username: "demo",
+    password: "password",
+    followedArtists: [1],
+  },
+];
+
+let artists = [
+  { id: 1, name: "The Weekend Vibes" },
+  { id: 2, name: "City Lights Band" },
+  { id: 3, name: "Acoustic Souls" },
+
+  // NEW ARTIST
+  { id: 4, name: "Neon Skyline" },
+];
+
+let concerts = [
+  {
+    id: 1,
+    title: "Weekend Vibes Live in NYC",
+    date: "2025-12-01",
+    artistId: 1,
+    ticketUrl: "https://tickets.example.com/concert/1",
+  },
+  {
+    id: 2,
+    title: "City Lights at LA Arena",
+    date: "2025-12-15",
+    artistId: 2,
+    ticketUrl: "https://tickets.example.com/concert/2",
+  },
+  {
+    id: 3,
+    title: "Acoustic Night with Acoustic Souls",
+    date: "2025-11-30",
+    artistId: 3,
+    ticketUrl: "https://tickets.example.com/concert/3",
+  },
+
+  // NEW CONCERT
+  {
+    id: 4,
+    title: "Neon Skyline World Tour",
+    date: "2026-01-10",
+    artistId: 4,
+    ticketUrl: "https://tickets.example.com/concert/4",
+  },
+];
+
+let reviews = [
+  {
+    id: 1,
+    rating: 5,
+    comment: "Amazing performance!",
+    userId: 1,
+    artistId: 1,
+  },
+];
+
+// =====================================================
+// Helper Functions
+// =====================================================
+
+function findUserByUsername(username) {
+  return users.find((u) => u.username === username);
+}
+
+function findUserById(id) {
+  return users.find((u) => u.id === Number(id));
+}
+
+function findArtistById(id) {
+  return artists.find((a) => a.id === Number(id));
+}
+
+function findConcertById(id) {
+  return concerts.find((c) => c.id === Number(id));
+}
+
+// =====================================================
+// Routes
+// =====================================================
+
+// Basic health check
+app.get("/", (req, res) => {
+  res.send("BandTrack backend is running!");
+});
+
+// ------------------------
+// USER: Login
+// ------------------------
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  const user = findUserByUsername(username);
+  if (!user || user.password !== password) {
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
+
+  res.json({
+    message: "Login successful",
+    user: {
+      id: user.id,
+      username: user.username,
+      followedArtists: user.followedArtists,
+    },
+  });
+});
+
+// ------------------------
+// USER: Register
+// ------------------------
+app.post("/register", (req, res) => {
+  const { username, password } = req.body;
+
+  if (findUserByUsername(username)) {
+    return res.status(400).json({ message: "Username already exists" });
+  }
+
+  const newUser = {
+    id: users.length + 1,
+    username,
+    password,
+    followedArtists: [],
+  };
+
+  users.push(newUser);
+
+  res.status(201).json({
+    message: "User registered",
+    user: {
+      id: newUser.id,
+      username: newUser.username,
+      followedArtists: newUser.followedArtists,
+    },
+  });
+});
+
+// ------------------------
+// ARTISTS: List All
+// ------------------------
+app.get("/artists", (req, res) => {
+  res.json(artists);
+});
+
+// ------------------------
+// ARTIST: Details + Reviews
+// ------------------------
+app.get("/artists
