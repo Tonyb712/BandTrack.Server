@@ -305,13 +305,3 @@ app.listen(PORT, () => {
   console.log(`BandTrack backend listening on http://localhost:${PORT}`);
 });
 
-// ==== FAKE ARTIST AND CONCERT ====
-artists.push({ id: 4, name: "Neon Skyline" });
-
-concerts.push({
-  id: 4,
-  title: "Neon Skyline World Tour",
-  date: "2026-01-10",
-  artistId: 4,
-  ticketUrl: "https://tickets.example.com/concert/4"
-});
