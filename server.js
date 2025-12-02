@@ -60,7 +60,7 @@ let concerts = [
   date: "2026-01-10",
   artistId: 4,
   ticketUrl: "https://tickets.example.com/concert/4"
-}
+},
 ];
 
 let reviews = [
