@@ -1,65 +1,172 @@
+/* ================================
+   Global reset / base
+   ================================ */
 * {
   box-sizing: border-box;
 }
 
+:root {
+  --bg-main: #050509;
+  --bg-elevated: #141419;
+  --bg-elevated-soft: #191922;
+  --border-subtle: #262636;
+  --accent: #1db954;          /* Spotify green */
+  --accent-soft: rgba(29, 185, 84, 0.2);
+  --accent-strong: #1ed760;
+  --text-main: #f5f5f7;
+  --text-muted: #a0a3b1;
+  --text-soft: #6f7280;
+  --danger: #ff4d4f;
+  --success: #2ecc71;
+}
+
+/* ================================
+   Layout
+   ================================ */
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f5f7;
-  color: #222;
+  background: radial-gradient(circle at top left, #1b1b26 0, #050509 40%, #020207 100%);
+  color: var(--text-main);
 }
 
+/* Header with dark gradient bar */
+
 header {
-  background: #146c94;
-  color: #fff;
-  padding: 1.5rem 1rem;
-  text-align: center;
+  background: linear-gradient(
+    135deg,
+    #050509,
+    #151524 40%,
+    #050509
+  );
+  border-bottom: 1px solid #1c1c2a;
+  padding: 1.3rem 1rem 1rem;
 }
 
 header h1 {
   margin: 0;
+  text-align: center;
+  letter-spacing: 0.08em;
+  font-size: 1.6rem;
+  text-transform: uppercase;
 }
 
 header .tagline {
   margin: 0.25rem 0 0;
-  opacity: 0.9;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
+/* Main container */
+
 main {
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 1.5rem auto;
-  padding: 0 1rem 2rem;
+  padding: 0 1rem 2.5rem;
 }
+
+/* Footer */
 
 footer {
   text-align: center;
   padding: 1rem;
-  color: #666;
-  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  border-top: 1px solid #181827;
+  background: #050509;
 }
+
+/* Utility */
 
 .hidden {
   display: none;
 }
 
+/* ================================
+   Cards / Panels
+   ================================ */
+
 /* Login card */
+
 #login-section {
-  max-width: 400px;
+  max-width: 420px;
   margin: 0 auto;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  background: radial-gradient(circle at top left, #26263b 0, #141419 45%, #07070b 100%);
+  padding: 1.7rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #26263b;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.01);
 }
 
 #login-section h2 {
   margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
 }
+
+/* App area */
+
+#app-section {
+  background: transparent;
+}
+
+/* Top bar with user info */
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+#user-info {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Grid of 3 cards */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: var(--bg-elevated);
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  min-height: 260px;
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+/* ================================
+   Forms & Inputs
+   ================================ */
 
 label {
   display: block;
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
 }
 
 input[type="text"],
@@ -67,16 +174,33 @@ input[type="password"],
 input[type="number"],
 textarea {
   width: 100%;
-  padding: 0.4rem 0.6rem;
+  padding: 0.45rem 0.7rem;
   margin-top: 0.25rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
+  border-radius: 999px;
+  border: 1px solid #2b2b3a;
+  background: #0b0b12;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 textarea {
+  border-radius: 12px;
   resize: vertical;
+  min-height: 70px;
 }
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+  background: #10101a;
+}
+
+/* ================================
+   Buttons
+   ================================ */
 
 .button-row {
   display: flex;
@@ -86,92 +210,75 @@ textarea {
 
 button {
   cursor: pointer;
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
   border: none;
   font-size: 0.9rem;
-  background: #146c94;
-  color: #fff;
-  transition: background 0.15s ease, transform 0.05s ease;
+  font-weight: 500;
+  background: var(--accent);
+  color: #020204;
+  letter-spacing: 0.01em;
+  transition:
+    background 0.15s ease,
+    transform 0.05s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+  box-shadow: 0 8px 18px rgba(29, 185, 84, 0.35);
 }
 
 button.secondary {
-  background: #666;
+  background: #26263a;
+  color: var(--text-main);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
 }
 
 button.small {
   font-size: 0.8rem;
-  padding: 0.35rem 0.6rem;
+  padding: 0.35rem 0.7rem;
 }
 
 button:hover {
-  background: #0f5473;
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(29, 185, 84, 0.45);
+}
+
+button.secondary:hover {
+  background: #32324a;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.75);
 }
 
 button:active {
-  transform: scale(0.97);
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
 }
 
+/* ================================
+   Messages / Status
+   ================================ */
+
 .message {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
   min-height: 1.1rem;
+  color: var(--text-muted);
 }
 
 .message.error {
-  color: #c0392b;
+  color: var(--danger);
 }
 
 .message.success {
-  color: #27ae60;
+  color: var(--success);
 }
 
-/* App layout */
-
-#app-section {
-  background: transparent;
-}
-
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-#user-info {
-  font-weight: 500;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-  min-height: 260px;
-}
-
-.card h2 {
-  margin-top: 0;
-}
-
-.subtitle {
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 0;
-}
-
-/* Lists */
+/* ================================
+   Lists (artists, concerts, reviews)
+   ================================ */
 
 .list-item {
-  border-bottom: 1px solid #eee;
-  padding: 0.5rem 0;
+  border-bottom: 1px solid #222235;
+  padding: 0.55rem 0;
 }
 
 .list-item:last-child {
@@ -182,48 +289,67 @@ button:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.4rem;
 }
 
 .list-title {
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .list-meta {
-  font-size: 0.85rem;
-  color: #666;
+  font-size: 0.8rem;
+  color: var(--text-soft);
 }
+
+/* Badge for "Following" */
 
 .badge {
   display: inline-block;
-  font-size: 0.75rem;
-  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+  padding: 0.12rem 0.5rem;
   border-radius: 999px;
-  background: #e3f4ff;
-  color: #146c94;
-  margin-left: 0.35rem;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  margin-left: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-/* Reviews */
+/* ================================
+   Reviews styling
+   ================================ */
 
 .review-rating {
   font-weight: 600;
   font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+  color: var(--accent-strong);
 }
 
 .review-comment {
   font-size: 0.9rem;
+  color: var(--text-main);
 }
 
 .review-user {
-  font-size: 0.8rem;
-  color: #777;
+  font-size: 0.78rem;
+  color: var(--text-soft);
   margin-top: 0.15rem;
 }
 
-/* Responsive */
+/* ================================
+   Responsive behaviour
+   ================================ */
 
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
