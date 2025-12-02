@@ -28,7 +28,7 @@ let artists = [
   { id: 3, name: 'Acoustic Souls' },
  
   // ==== NEW ARTIST AND CONCERT ====
-  { id: 4, name: "Neon Skyline" };
+  { id: 4, name: "Neon Skyline" },
 ];
 
 let concerts = [
