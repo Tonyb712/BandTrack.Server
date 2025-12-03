@@ -121,6 +121,7 @@ app.post('/login', (req, res) => {
     message: 'Login successful',
     user: {
       id: user.id,
+      role: user.role,
       username: user.username,
       followedArtists: user.followedArtists,
     },
