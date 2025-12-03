@@ -60,3 +60,42 @@ function addConcert() {
     document.getElementById("concertMessage").textContent = data.message;
   });
 }
+
+function loadReviews() {
+  fetch(API + "/artists/1/reviews") // we'll override by loading ALL below
+    .then(() => {
+      // Load ALL reviews with direct backend access instead
+      fetch(API + "/admin/all-reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: ADMIN_ID })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById("reviews");
+        div.innerHTML = "";
+        data.forEach(r => {
+          div.innerHTML += `
+            <div class="list-item">
+              <strong>Rating:</strong> ${r.rating}<br>
+              <strong>Comment:</strong> ${r.comment}<br>
+              <strong>User:</strong> ${r.userId} |
+              <strong>Artist:</strong> ${r.artistId}
+              <br>
+              <button class="small" onclick="deleteReview(${r.id})">Delete</button>
+            </div>
+          `;
+        });
+      });
+    });
+}
+
+function deleteReview(id) {
+  fetch(API + "/admin/review/delete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId: ADMIN_ID, reviewId: id })
+  })
+  .then(() => loadReviews());
+}
+
