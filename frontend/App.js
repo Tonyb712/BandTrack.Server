@@ -115,10 +115,16 @@ function handleLogout() {
 }
 
 // --- UI helpers ---
+  function showApp() {
+  // If admin login → redirect to admin panel
+  if (currentUser.role === "admin") {
+    window.location.href = "admin.html";
+    return;
+  }
 
-function showApp() {
-  loginSection.classList.add('hidden');
-  appSection.classList.remove('hidden');
+  // Otherwise show normal user app
+  loginSection.classList.add("hidden");
+  appSection.classList.remove("hidden");
   userInfoSpan.textContent = `Logged in as: ${currentUser.username}`;
   clearAppViews();
 }
