@@ -403,6 +403,11 @@ app.post("/admin/review/delete", requireAdmin, (req, res) => {
   res.json({ message: "Review deleted" });
 });
 
+// GET ALL REVIEWS (ADMIN ONLY)
+app.post("/admin/all-reviews", requireAdmin, (req, res) => {
+  res.json(reviews);
+});
+
 
 // ===== Start server =====
 
