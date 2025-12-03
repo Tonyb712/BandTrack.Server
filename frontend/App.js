@@ -60,11 +60,23 @@ async function handleLogin(event) {
     }
 
     const data = await res.json();
-    currentUser = data.user;
-    showSuccess(loginMessage, 'Login successful.');
+currentUser = data.user;
 
-    showApp();
-    await loadArtists();
+// Save user to localStorage so admin.html can see their role
+localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+showSuccess(loginMessage, "Login successful.");
+
+// ADMIN REDIRECT
+if (currentUser.role === "admin") {
+  window.location.href = "admin.html";
+  return;
+}
+
+// Normal user path
+showApp();
+await loadArtists();
+
 
   } catch (err) {
     console.error(err);
