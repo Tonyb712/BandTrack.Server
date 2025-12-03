@@ -18,8 +18,18 @@ let users = [
     id: 1,
     username: 'demo',
     password: 'password',
+    role: "user",
     followedArtists: [1],
   },
+  
+  {
+  id: 999,
+  username: "admin",
+  password: "admin123",
+  role: "admin",
+  followedArtists: []
+},
+
 ];
 
 let artists = [
@@ -298,6 +308,100 @@ app.get('/artists/:artistId/reviews', (req, res) => {
 
   res.json(artistReviews);
 });
+
+function requireAdmin(req, res, next) {
+  const { userId } = req.body;
+
+  const user = findUserById(userId);
+
+  if (!user || user.role !== "admin") {
+    return res.status(403).json({ 
+      message: "Access denied: admin only" 
+    });
+  }
+
+  next();
+}
+
+// =====================================================
+// ADMIN ROUTES
+// =====================================================
+
+// GET ALL USERS
+app.post("/admin/users", requireAdmin, (req, res) => {
+  res.json(users);
+});
+
+// DELETE USER
+app.post("/admin/user/delete", requireAdmin, (req, res) => {
+  const { deleteId } = req.body;
+
+  users = users.filter(u => u.id !== deleteId);
+
+  res.json({ message: "User deleted", users });
+});
+
+// ADD ARTIST
+app.post("/admin/artist/add", requireAdmin, (req, res) => {
+  const { name } = req.body;
+
+  const newArtist = {
+    id: artists.length + 1,
+    name
+  };
+
+  artists.push(newArtist);
+
+  res.json({ message: "Artist added", artist: newArtist });
+});
+
+// DELETE ARTIST
+app.post("/admin/artist/delete", requireAdmin, (req, res) => {
+  const { artistId } = req.body;
+
+  artists = artists.filter(a => a.id !== artistId);
+  concerts = concerts.filter(c => c.artistId !== artistId);
+  reviews = reviews.filter(r => r.artistId !== artistId);
+
+  res.json({ message: "Artist deleted" });
+});
+
+// ADD CONCERT
+app.post("/admin/concert/add", requireAdmin, (req, res) => {
+  const { title, date, artistId } = req.body;
+
+  const newConcert = {
+    id: concerts.length + 1,
+    title,
+    date,
+    artistId,
+    ticketUrl: `https://tickets.example.com/concert/${concerts.length + 1}`
+  };
+
+  concerts.push(newConcert);
+
+  res.json({ message: "Concert added", concert: newConcert });
+});
+
+// DELETE CONCERT
+app.post("/admin/concert/delete", requireAdmin, (req, res) => {
+  const { concertId } = req.body;
+
+  concerts = concerts.filter(c => c.id !== concertId);
+  reviews = reviews.filter(r => r.concertId !== concertId);
+
+  res.json({ message: "Concert deleted" });
+});
+
+// DELETE REVIEW
+app.post("/admin/review/delete", requireAdmin, (req, res) => {
+  const { reviewId } = req.body;
+
+  reviews = reviews.filter(r => r.id !== reviewId);
+
+  res.json({ message: "Review deleted" });
+});
+
 
 // ===== Start server =====
 
