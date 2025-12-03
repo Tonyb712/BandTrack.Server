@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>BandTrack Admin Panel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <h1>BandTrack Admin Panel</h1>
+  <p class="tagline">Administrator Controls</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>User Management</h2>
+    <button onclick="loadUsers()">Load Users</button>
+    <div id="users"></div>
+  </section>
+
+  <section class="card">
+    <h2>Add Artist</h2>
+    <input id="artistName" placeholder="Artist name" />
+    <button onclick="addArtist()">Add Artist</button>
+    <p id="artistMessage"></p>
+  </section>
+
+  <section class="card">
+    <h2>Add Concert</h2>
+    <input id="concertTitle" placeholder="Concert Title" />
+    <input id="concertDate" placeholder="YYYY-MM-DD" />
+    <input id="concertArtist" placeholder="Artist ID" />
+    <button onclick="addConcert()">Add Concert</button>
+    <p id="concertMessage"></p>
+  </section>
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>
