@@ -98,4 +98,8 @@ function deleteReview(id) {
   })
   .then(() => loadReviews());
 }
+// GET ALL REVIEWS (admin only)
+app.post("/admin/all-reviews", requireAdmin, (req, res) => {
+  res.json(reviews);
+});
 
